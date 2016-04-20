@@ -6,11 +6,10 @@ $db = new DB_Functions();
 // json response array
 $response = array("error" => FALSE);
  
-if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['password'])) {
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
  
     // receiving the post params
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
+    $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
  
@@ -22,13 +21,12 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
         echo json_encode($response);
     } else {
         // create a new user
-        $user = $db->storeUser($firstName, $lastName, $email, $password);
+        $user = $db->storeUser($name, $email, $password);
         if ($user) {
             // user stored successfully
             $response["error"] = FALSE;
             $response["uid"] = $user["unique_id"];
-            $response["user"]["firstName"] = $user["firstName"];
-            $response["user"]["lastName"] = $user["lastName"];
+            $response["user"]["name"] = $user["name"];
             $response["user"]["email"] = $user["email"];
             $response["user"]["created_at"] = $user["created_at"];
             $response["user"]["updated_at"] = $user["updated_at"];
@@ -42,7 +40,7 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
     }
 } else {
     $response["error"] = TRUE;
-    $response["error_msg"] = "Required parameters (First Name, Last Name, email or password) is missing!";
+    $response["error_msg"] = "Required parameters (Fullname, email or password) is missing!";
     echo json_encode($response);
 }
 ?>

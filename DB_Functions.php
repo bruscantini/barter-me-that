@@ -21,14 +21,14 @@ class DB_Functions {
      * Storing new user
      * returns user details
      */
-    public function storeUser($firstName, $lastName, $email, $password) {
+    public function storeUser($name, $email, $password) {
         $uuid = uniqid('', true);
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
  
-        $stmt = $this->conn->prepare("INSERT INTO User(unique_id, first_name, last_name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("ssssss", $uuid, $firstName, $lastName, $email, $encrypted_password, $salt);
+        $stmt = $this->conn->prepare("INSERT INTO User(unique_id, name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("ssssss", $uuid, $name, $email, $encrypted_password, $salt);
         $result = $stmt->execute();
         $stmt->close();
  
