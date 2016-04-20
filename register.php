@@ -27,8 +27,8 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
             // user stored successfully
             $response["error"] = FALSE;
             $response["uid"] = $user["unique_id"];
-            $response["user"]["firstName"] = $user["firstName"];
-            $response["user"]["lastName"] = $user["lastName"];
+            $response["user"]["firstName"] = $user["first_name"];
+            $response["user"]["lastName"] = $user["last_name"];
             $response["user"]["email"] = $user["email"];
             $response["user"]["created_at"] = $user["created_at"];
             $response["user"]["updated_at"] = $user["updated_at"];

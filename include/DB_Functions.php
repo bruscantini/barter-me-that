@@ -6,7 +6,7 @@ class DB_Functions {
  
     // constructor
     function __construct() {
-        require_once 'include/DB_Connect.php';
+        require_once 'DB_Connect.php';
         // connecting to database
         $db = new Db_Connect();
         $this->conn = $db->connect();
@@ -27,14 +27,14 @@ class DB_Functions {
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
  
-        $stmt = $this->conn->prepare("INSERT INTO User(unique_id, first_name, last_name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, ?, NOW())");
+        $stmt = $this->conn->prepare("INSERT INTO user(unique_id, first_name, last_name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, ?, NOW())");
         $stmt->bind_param("ssssss", $uuid, $firstName, $lastName, $email, $encrypted_password, $salt);
         $result = $stmt->execute();
         $stmt->close();
  
         // check for successful store
         if ($result) {
-            $stmt = $this->conn->prepare("SELECT * FROM User WHERE email = ?");
+            $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $user = $stmt->get_result()->fetch_assoc();
@@ -51,7 +51,7 @@ class DB_Functions {
      */
     public function getUserByEmailAndPassword($email, $password) {
  
-        $stmt = $this->conn->prepare("SELECT * FROM User WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = ?");
  
         $stmt->bind_param("s", $email);
  
@@ -77,7 +77,7 @@ class DB_Functions {
      * Check user is existed or not
      */
     public function isUserExisted($email) {
-        $stmt = $this->conn->prepare("SELECT email from User WHERE email = ?");
+        $stmt = $this->conn->prepare("SELECT email from user WHERE email = ?");
  
         $stmt->bind_param("s", $email);
  

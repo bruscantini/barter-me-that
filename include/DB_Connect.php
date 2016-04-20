@@ -7,7 +7,7 @@ class DB_Connect {
         require_once 'db_config.php';
          
         // Connecting to mysql database
-        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+        $this->conn = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
          
         // return database handler
         return $this->conn;
